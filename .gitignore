@@ -1,0 +1,4 @@
+*.pdf
+__pycache__
+utils/__pycache__
+utils/.idea
