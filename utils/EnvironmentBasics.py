@@ -258,7 +258,7 @@ class Environment():
         next_state = self.sid_to_state[next_sid]
         reward = next_state.getReward()
         self.current_sid = next_sid
-        return next_state, reward, next_state.is_terminal
+        return next_sid, reward, next_state.is_terminal
     
     def render(self):
         """ Render the environment

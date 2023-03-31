@@ -85,6 +85,14 @@ class Policy():
             valid_action_ids = np.where(self.__policy[state] != -np.inf)[0]
             self.__policy[state, valid_action_ids] /= np.sum(self.__policy[state, valid_action_ids])
 
+    def rankNormalize(self) -> None:
+        """Normalizes the policy so that the sum of probabilities of all actions in a state is 1"""
+        for state in range(self.__policy.shape[0]):
+            valid_action_ids = np.where(self.__policy[state] != -np.inf)[0]
+            values = np.linspace(0.4, 1, len(valid_action_ids))
+            rank = np.argsort(self.__policy[state, valid_action_ids])
+            self.__policy[state, valid_action_ids[rank]] = values
+
     def isValidAction(self, state: StateOrSid, action: ActionOrAid) -> bool:
         """Returns True if the action is valid in the given state"""
         return self[state, action] != -np.inf
