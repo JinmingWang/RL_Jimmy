@@ -129,13 +129,13 @@ class Agent():
         return self.__repr__()
 
     def getPolicyActions(self, state: StateOrSid) -> np.ndarray:
-        """Get the best actions at a given state following the current policy
+        """Get the actions at a given state following the probability defined by the current policy
 
         :param state: the given state
         :return: the best actions
         """
-        best_action_prob = np.max(self.policy[state])
-        return np.where(self.policy[state] == best_action_prob)[0]
+        valid_actions = self.policy.getValidActionIds(state)
+        return np.random.choice(valid_actions, p=self.policy[state, valid_actions])
     
     def getBestActions(self, state: StateOrSid) -> np.ndarray:
         """Get the best actions at a given state following the current action-value function
@@ -157,7 +157,7 @@ class Agent():
         if random.random() < epsilon:
             return np.random.choice(self.policy.getValidActionIds(state))
         else:
-            return np.random.choice(self.getPolicyActions(state))
+            return self.getPolicyActions(state)
         
 
     def copy(self, environment) -> Agent:

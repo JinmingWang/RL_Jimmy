@@ -46,7 +46,7 @@ class Action():
 
 
 class State():
-    def __init__(self, name:str, rewards: Union[np.ndarray, List[float]], is_terminal: bool=False) -> None:
+    def __init__(self, name:str, rewards: Union[np.ndarray, List[float]], is_terminal: bool=False, representation: Any=None) -> None:
         """ State class
 
         :param name: name of the state
@@ -56,6 +56,7 @@ class State():
         self.name = name
         self.is_terminal = is_terminal
         self.rewards = rewards
+        self.representation = representation
 
     def __repr__(self) -> str:
         return f"State({self.name} with rewards: {self.rewards}, is_terminal: {self.is_terminal})"

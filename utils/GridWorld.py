@@ -1,26 +1,31 @@
 import matplotlib.pyplot as plt
 import numpy as np
 try:
-    from utils.utils import printOnFirstCall
     from utils.EnvironmentBasics import Environment, Action, State
     from utils.AgentBasics import Agent, Policy
 except:
+    from utils import printOnFirstCall
     from EnvironmentBasics import Environment, Action, State
     from AgentBasics import Agent, Policy
 from typing import *
 
 class GridWorld(Environment):
-    def __init__(self, world_size: int, terminal_states: List[Tuple[int, int]] = None):
+    def __init__(self, world_size: int, 
+                 terminal_states: List[Tuple[int, int]] = None, 
+                 state_space: List[State] = None, 
+                 action_space: List[Action] = None):
         """ Grid world class
 
         :param world_size: size of the world
         """
-        state_space = []
-        for row in range(world_size):
-            for col in range(world_size):
-                is_terminal = (row, col) in terminal_states
-                state_space.append(State(f"({row},{col})", [int(is_terminal)], is_terminal))
-        action_space = [Action("left"), Action("right"), Action("down"), Action("up")]
+        if state_space is None:
+            state_space = []
+            for row in range(world_size):
+                for col in range(world_size):
+                    is_terminal = (row, col) in terminal_states
+                    state_space.append(State(f"({row},{col})", [int(is_terminal)], is_terminal))
+        if action_space is None:
+            action_space = [Action("left"), Action("right"), Action("down"), Action("up")]
         super().__init__(state_space, action_space)
 
         self.world_size = world_size
@@ -71,7 +76,7 @@ class GridWorld(Environment):
         plt.xlim(-1, self.world_size)
         plt.ylim(-1, self.world_size)
         color = agent.state_value if agent is not None else [state.is_terminal for state in self.states]
-        plt.scatter(self.grid_colid, self.grid_rowid, c=color, marker="$□$", s=1000)
+        plt.scatter(self.grid_colid, self.grid_rowid, c=color, marker="s", s=1000, alpha=0.75)
         for gi in range(self.n_grids):
             label = f"{agent.state_value[gi] if agent is not None else self.states[gi].is_terminal:.2f}"
             plt.annotate(label, (self.grid_colid[gi], self.grid_rowid[gi]), textcoords="offset points", xytext=(2, -2), ha="center")

@@ -25,7 +25,7 @@ For English speakers, the markdown comments in this project is not very frendly,
 | 2_BellmanEquation.ipynb | 59 | Bellman equation | Terrible, but ok once you get it. |
 | 3_PolicyIteration.ipynb | 74-80 | Policy iteration in Grid World | Good. |
 | 4_ValueIteration.ipynb | 82 | Value iteration in Grid World | Nice. |
-| 5_MonteCarlpBaisc.ipynb | 92 | Monte Carlo in Grid World | Good. |
+| 5_MonteCarlpBaisc.ipynb | 92 - 103 (temp) | Monte Carlo in Grid World | Good. |
 
 ## Future Plans
 - [ ] Temporal Difference Learning
