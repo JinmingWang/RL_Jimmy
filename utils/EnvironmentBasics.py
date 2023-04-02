@@ -4,6 +4,10 @@ from typing import *
 import random
 import matplotlib.pyplot as plt
 import networkx as nx
+try:
+    from utils.utils import printOnFirstCall
+except:
+    from utils import printOnFirstCall
 
 
 """
@@ -224,7 +228,8 @@ class Environment():
         return np.nonzero(self.transitions[state, :, :].sum(axis=1))[0]
     
 
-    def getNextStateProbs(self, state: StateOrSid, action: ActionOrAid) -> np.ndarray:
+    @printOnFirstCall("NOTE: getModelNextStateProbs(state, action) assumes a model exists for the environment.")
+    def getModelNextStateProbs(self, state: StateOrSid, action: ActionOrAid) -> np.ndarray:
         """ Get the net state probabilities of the state-action-state triples
 
         :param state: the state

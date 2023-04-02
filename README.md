@@ -6,7 +6,7 @@ But I may give up at any time because I am lazy.<p>
 For English speakers, the markdown comments in this project is not very frendly, but the book "Reinforcement Learning: An Introduction" by Richard S. Sutton and Andrew G. Barto is very good, the explanations in the book can be understood by a 5-year-old child English speaker. I recommend it to you.<p>
 
 ## Contents 目录
-### Utility Functions and Classes
+### Utility Functions and Support Classes
 - utils
   - EnvironmentBasics.py
     - Action class
@@ -18,7 +18,7 @@ For English speakers, the markdown comments in this project is not very frendly,
   - GridWord.py
     - GridWorld(Environment) class
 
-### 
+### Implementation of RL Algorithms
 | File | Page in Book | Description | My Comment |
 | --- | --- | --- | --- |
 | 1_KArmedBandit.ipynb | 25 | k-armed bandit | A little bit messy. |
@@ -26,3 +26,12 @@ For English speakers, the markdown comments in this project is not very frendly,
 | 3_PolicyIteration.ipynb | 74-80 | Policy iteration in Grid World | Good. |
 | 4_ValueIteration.ipynb | 82 | Value iteration in Grid World | Nice. |
 | 5_MonteCarlpBaisc.ipynb | 92 | Monte Carlo in Grid World | Good. |
+
+## Future Plans
+- [ ] Temporal Difference Learning
+- [ ] SARSA and Expected SARSA
+- [ ] Q-Learning
+- [ ] n-Step Bootstrapping
+- [ ] Deep RL
+- [ ] Imitation Learning
+- [ ] Reinforcement Learning from Human Feedback (RLHF)

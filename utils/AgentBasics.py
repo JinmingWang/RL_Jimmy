@@ -64,7 +64,7 @@ class Policy():
                 indices = (self.state_to_sid[indices[0]], self.action_to_aid[indices[1]])
             if isinstance(indices[1], Action):
                 indices = (indices[0], self.action_to_aid[indices[1]])
-            assert self.__policy[indices] != -np.inf, f"Action {indices[1]} is not valid in state {indices[0]}"
+            assert np.all(self.__policy[indices] != -np.inf), f"Action {indices[1]} is not valid in state {indices[0]}"
             self.__policy[indices] = value
 
 
@@ -138,7 +138,7 @@ class Agent():
         return np.where(self.policy[state] == best_action_prob)[0]
     
     def getBestActions(self, state: StateOrSid) -> np.ndarray:
-        """Get the best actions at a given state following the current policy
+        """Get the best actions at a given state following the current action-value function
 
         :param state: the given state
         :return: the best actions

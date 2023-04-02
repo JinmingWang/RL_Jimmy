@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 try:
+    from utils.utils import printOnFirstCall
     from utils.EnvironmentBasics import Environment, Action, State
     from utils.AgentBasics import Agent, Policy
 except:
