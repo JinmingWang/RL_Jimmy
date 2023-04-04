@@ -95,19 +95,19 @@ class GridWorld(Environment):
         return (self.world_size, self.world_size)
         
 
-    def drawArrow(self, x: int, y: int, action: Union[Action, int]):
+    def drawArrow(self, x: int, y: int, action: Union[Action, int], length: float = 1):
         """ Draw an arrow from point x, y, direction code: {0: "left", 1: "right", 2: "down", 3: "up"} """
         if not isinstance(action, Action):
             action = self.aid_to_action[action]
         dx, dy = 0, 0
         if action.name == "left":
-            dx = -0.5
+            dx = -0.5 * length
         elif action.name == "right":
-            dx = 0.5
+            dx = 0.5 * length
         elif action.name == "down":
-            dy = -0.5
+            dy = -0.5 * length
         elif action.name == "up":
-            dy = 0.5
+            dy = 0.5 * length
 
         plt.arrow(x, y, dx, dy, head_width=0.1, head_length=0.1, length_includes_head=True)
 
