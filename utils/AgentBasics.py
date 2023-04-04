@@ -83,7 +83,14 @@ class Policy():
         """Normalizes the policy so that the sum of probabilities of all actions in a state is 1"""
         for state in range(self.__policy.shape[0]):
             valid_action_ids = np.where(self.__policy[state] != -np.inf)[0]
-            self.__policy[state, valid_action_ids] /= np.sum(self.__policy[state, valid_action_ids])
+            if len(valid_action_ids) != 0:
+                self.__policy[state, valid_action_ids] -= np.min(self.__policy[state, valid_action_ids])
+                sum = np.sum(self.__policy[state, valid_action_ids])
+                if sum != 0:
+                    self.__policy[state, valid_action_ids] /= sum
+                else:
+                    self.__policy[state, valid_action_ids] = 1 / len(valid_action_ids)
+            #self.__policy[state, valid_action_ids] /= np.sum(self.__policy[state, valid_action_ids])
 
     def rankNormalize(self) -> None:
         """Normalizes the policy so that the sum of probabilities of all actions in a state is 1"""
@@ -120,7 +127,7 @@ class Agent():
         # It just has the same structure as a policy
         # Policy is one state to many actions with probabilities
         # Whereas action_value_function is one state to many actions with values
-        self.action_value = Policy(environment, zero_init=True)
+        self.action_value = Policy(environment)
 
     def __repr__(self) -> str:
         return f"Agent({self.policy})"
@@ -128,7 +135,7 @@ class Agent():
     def __str__(self) -> str:
         return self.__repr__()
 
-    def getPolicyActions(self, state: StateOrSid) -> np.ndarray:
+    def getPolicyAction(self, state: StateOrSid) -> np.ndarray:
         """Get the actions at a given state following the probability defined by the current policy
 
         :param state: the given state
@@ -157,7 +164,7 @@ class Agent():
         if random.random() < epsilon:
             return np.random.choice(self.policy.getValidActionIds(state))
         else:
-            return self.getPolicyActions(state)
+            return self.getPolicyAction(state)
         
 
     def copy(self, environment) -> Agent:

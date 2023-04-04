@@ -85,7 +85,7 @@ class GridWorld(Environment):
         if agent is not None:
             for sid in range(self.n_states):
                 if not self.isTerminalState(sid):
-                    for action in agent.getPolicyActions(sid):
+                    for action in agent.getBestActions(sid):
                         row, col = self.stateIdToCoord(sid)
                         self.drawArrow(col, row, action)
 
@@ -101,13 +101,13 @@ class GridWorld(Environment):
             action = self.aid_to_action[action]
         dx, dy = 0, 0
         if action.name == "left":
-            dx = -0.5 * length
+            dx = -0.4 * length
         elif action.name == "right":
-            dx = 0.5 * length
+            dx = 0.4 * length
         elif action.name == "down":
-            dy = -0.5 * length
+            dy = -0.4 * length
         elif action.name == "up":
-            dy = 0.5 * length
+            dy = 0.4 * length
 
         plt.arrow(x, y, dx, dy, head_width=0.1, head_length=0.1, length_includes_head=True)
 
