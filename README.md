@@ -5,7 +5,7 @@ But I may give up at any time because I am lazy.<p>
 但我懒得一，所以可能会随时放弃。<p>
 For English speakers, the markdown comments in this project is not very frendly, but the book "Reinforcement Learning: An Introduction" by Richard S. Sutton and Andrew G. Barto is very good, the explanations in the book can be understood by a 5-year-old child English speaker. I recommend it to you.<p>
 
-## Contents 目录
+# 目录 Contents 
 ### Utility Functions and Support Classes
 - utils
   - EnvironmentBasics.py
@@ -28,9 +28,17 @@ For English speakers, the markdown comments in this project is not very frendly,
 | 5_MonteCarloBaisc.ipynb | 92 | Monte Carlo in Grid World | Nice. |
 | 6_OffPolicyMonteCarlo.ipynb | 110 - 111 | Off-policy Monte Carlo in Grid World | Good. |
 | 7_TemporalDifferenceLearning.ipynb | 120 | Temporal difference learning in Grid World | Good. |
+| 8_Sarsa.ipynb | 129 | Sarsa in Grid World | Good. |
 
-## Future Plans
-- [ ] Temporal Difference Learning
+# 记错本 My Mistakes
+| File | Description |
+| --- | --- |
+| 5_MonteCarloBaisc.ipynb | 把非terminal state的grid也赋予了reward，导致虽然reward巅峰在terminal state，但agent可以通过在其他地方闲逛来疯狂赚reward，天下怎么能有这样的好事，我当场就把非terminal state的reward都改回了0。 |
+| 8_Sarsa.ipynb | 忘记了设置terminal state的action-value，导致action-value无法得到来自terminal state的reward，进而导致policy瞎指挥。我甚至看到policy的小箭头在让agent往坑里跳。|
+
+
+# Future Plans
+- [x] TD(0)
 - [ ] SARSA and Expected SARSA
 - [ ] Q-Learning
 - [ ] n-Step Bootstrapping
