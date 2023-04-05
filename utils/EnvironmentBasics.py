@@ -250,13 +250,21 @@ class Environment():
         :return: the terminal state ids
         """
         return np.array([sid for sid in self.state_ids if self.states[sid].is_terminal])
+    
+
+    def getNonTerminalStateIds(self) -> List[int]:
+        """ Get the non-terminal state ids
+
+        :return: the non-terminal state ids
+        """
+        return [int(sid) for sid in self.state_ids if not self.states[sid].is_terminal]
 
 
-    def step(self, action: ActionOrAid) -> Tuple[Union[int, State], float, bool]:
+    def step(self, action: ActionOrAid) -> float:
         """
         Step to the next state according to the current state and the action taken
         :param action: action id or action
-        :return: next state id, reward, is_terminal
+        :return: reward
         """
         assert self.isValidAction(self.current_sid, action), f"Invalid action {action} in state {self.current_sid}"
         # According to the current state and the action taken, choose one of the next states based on the probabilities
@@ -264,7 +272,7 @@ class Environment():
         next_state = self.sid_to_state[next_sid]
         reward = next_state.getReward()
         self.current_sid = next_sid
-        return next_sid, reward, next_state.is_terminal
+        return reward
     
     def render(self):
         """ Render the environment

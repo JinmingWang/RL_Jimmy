@@ -28,7 +28,9 @@ For English speakers, the markdown comments in this project is not very frendly,
 | 5_MonteCarloBaisc.ipynb | 92 | Monte Carlo in Grid World | Nice. |
 | 6_OffPolicyMonteCarlo.ipynb | 110 - 111 | Off-policy Monte Carlo in Grid World | Good. |
 | 7_TemporalDifferenceLearning.ipynb | 120 | Temporal difference learning in Grid World | Good. |
-| 8_Sarsa.ipynb | 129 | Sarsa in Grid World | Good. |
+| 8_Sarsa.ipynb | 129 | Sarsa in Grid World | Nice. |
+| 9_QLearning.ipynb | 131 | Q-learning in Grid World | Nice. |
+| a_ExpectedSarsa.ipynb | 133 | Expected Sarsa in Grid World | Nice. |
 
 # 记错本 My Mistakes
 | File | Description |
@@ -39,9 +41,9 @@ For English speakers, the markdown comments in this project is not very frendly,
 
 # Future Plans
 - [x] TD(0)
-- [ ] SARSA and Expected SARSA
-- [ ] Q-Learning
-- [ ] n-Step Bootstrapping
+- [x] SARSA and Expected SARSA
+- [x] Q-Learning
 - [ ] Deep RL
+- [ ] n-Step Bootstrapping
 - [ ] Imitation Learning
 - [ ] Reinforcement Learning from Human Feedback (RLHF)

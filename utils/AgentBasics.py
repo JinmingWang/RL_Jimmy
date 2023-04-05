@@ -75,6 +75,8 @@ class Policy():
 
     def getValidActionIds(self, state: StateOrSid) -> np.ndarray:
         """Returns the action ids that are valid in the given state"""
+        if isinstance(state, np.ndarray):
+            state = self.state_to_sid[int(state)]
         if isinstance(state, State):
             state = self.state_to_sid[state]
         return np.where(self.__policy[state] != -np.inf)[0]
@@ -103,6 +105,16 @@ class Policy():
     def isValidAction(self, state: StateOrSid, action: ActionOrAid) -> bool:
         """Returns True if the action is valid in the given state"""
         return self[state, action] != -np.inf
+    
+
+    def makeGreedyTo(self, action_value, state: StateOrSid) -> None:
+        """Makes the policy greedy to the other policy"""
+        if isinstance(state, State):
+            state = self.state_to_sid[state]
+
+        best_action_value = np.max(action_value[state])
+        self.__policy[state] = np.where(action_value[state] == best_action_value, 1, 0)
+        self.__policy[state] /= np.sum(self.__policy[state])
     
 
     def copy(self, environment) -> Policy:
@@ -166,6 +178,12 @@ class Agent():
         else:
             return self.getPolicyAction(state)
         
+
+    def initTerminalValues(self, environment: Environment) -> None:
+        """Initialize the value of all terminal states to 0"""
+        for state in environment.getTerminalStateIds():
+            self.state_value[state] = environment.sid_to_state[state].getReward()
+
 
     def copy(self, environment) -> Agent:
         """Returns a copy of the agent"""

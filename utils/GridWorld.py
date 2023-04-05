@@ -1,11 +1,10 @@
 import matplotlib.pyplot as plt
 import numpy as np
 try:
-    from utils.EnvironmentBasics import Environment, Action, State
+    from utils.EnvironmentBasics import Environment, Action, State, StateOrSid, ActionOrAid
     from utils.AgentBasics import Agent, Policy
 except:
-    from utils import printOnFirstCall
-    from EnvironmentBasics import Environment, Action, State
+    from EnvironmentBasics import Environment, Action, State, StateOrSid, ActionOrAid
     from AgentBasics import Agent, Policy
 from typing import *
 
@@ -42,6 +41,40 @@ class GridWorld(Environment):
                 self.setStateTransition(state_id, 2, self.coordToStateId((row-1) % world_size, col), 1)  # down
                 self.setStateTransition(state_id, 3, self.coordToStateId((row+1) % world_size, col), 1)  # up
                 state_id += 1
+
+        self.path = [self.start_sid]
+
+
+    def step(self, action: ActionOrAid) -> float:
+        """
+        Step to the next state according to the current state and the action taken
+        :param action: action id or action
+        :return: next state id, reward, is_terminal
+        """
+        assert self.isValidAction(self.current_sid, action), f"Invalid action {action} in state {self.current_sid}"
+        # According to the current state and the action taken, choose one of the next states based on the probabilities
+        next_sid = np.random.choice(self.n_states, p=self.transitions[self.current_sid, action, :])
+        next_state = self.sid_to_state[next_sid]
+        reward = next_state.getReward()
+        self.current_sid = next_sid
+        self.path.append(next_sid)
+        return reward
+    
+
+    def reset(self, start_state_id: int=-1) -> int:
+        """ Reset the environment to the start state
+        If start_state_id is not specified or set to -1, choose a random start state
+
+        :param start_state_id: the id of the start state, defaults to -1
+        :return: the start state id
+        """
+        if start_state_id == -1:
+            self.start_sid = np.random.randint(self.n_states)
+        else:
+            self.start_sid = start_state_id
+        self.current_sid = self.start_sid
+        self.path = [self.current_sid]
+        return self.start_sid
     
 
     def getReward(self, state_id: int) -> float:
@@ -59,6 +92,10 @@ class GridWorld(Environment):
 
     def isTerminalCoord(self, row: int, col: int) -> bool:
         return self.sid_to_state[self.coordToStateId(row, col)].is_terminal
+    
+
+    def getValidActionIds(self, state: StateOrSid) -> List[int]:
+        return [0, 1, 2, 3]
 
 
     def render(self, agent:Agent=None, figsize:Tuple[int, int]=None):
@@ -114,10 +151,9 @@ class GridWorld(Environment):
 
     def highlightTerminalStates(self):
         """ Highlight terminal states """
-        for row in range(self.world_size):
-            for col in range(self.world_size):
-                if self.sid_to_state[self.coordToStateId(row, col)].is_terminal:
-                    plt.scatter(col, row, c="red", marker="s", s=700)
+        for sid in self.getTerminalStateIds():
+            row, col = self.stateIdToCoord(sid)
+            plt.scatter(col, row, c="red", marker="s", s=700)
 
 
 if __name__ == "__main__":
